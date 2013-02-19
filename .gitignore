@@ -1,3 +1,6 @@
 composer.phar
 vendor/
-logs/*.log
+cache/*
+logs/*
+!cache/profiler/.gitkeep
+!logs/.gitkeep
