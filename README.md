@@ -13,6 +13,7 @@ vendor/bin/phpunit
 
 ## 導入済みコンポーネント
 * Silex
+* Silex Web Profiler
 * Twig
 * Monolog
 * PHPUnit
