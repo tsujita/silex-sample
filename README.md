@@ -5,3 +5,15 @@ cd PATH/TO/YOUR/APP
 curl -sS https://getcomposer.org/installer | php
 php composer.php install
 ```
+
+## テスト実行
+```
+vendor/bin/phpunit 
+```
+
+## 導入済みコンポーネント
+* Silex
+* Twig
+* Monolog
+* PHPUnit
+
