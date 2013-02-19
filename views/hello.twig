@@ -1,7 +1,7 @@
 {% extends "layout.twig" %}
 {% block title %}へろー{% endblock %}
 {% block content %}
-  {{ name|e }}<br />
+  <h1>Hello, {{ name|e }}!!</h1>
   <a href="{{ path('hello', {name: name}) }}">もう一回</a><br />
   <a href="{{ path('homepage') }}">TOPへ</a><br />
 {% endblock %}

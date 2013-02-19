@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>{% block title %}たいとる{% endblock %}</title>
+  <link rel="stylesheet" href="{{ app.request.basepath }}/assets/css/styles.css">
+  <script type="text/javascript" src="{{ app.request.basepath }}/assets/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
   <div id="content">{% block content %}{% endblock %}</div>
