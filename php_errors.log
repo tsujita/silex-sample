@@ -1,6 +1,0 @@
-[19-Feb-2013 18:30:18 UTC] PHP Fatal error:  Class 'Acme\HelloController' not found in /Users/atijust/Develop/card/index.php on line 18
-[19-Feb-2013 18:31:18 UTC] PHP Fatal error:  Class 'Acme\HelloController' not found in /Users/atijust/Develop/card/index.php on line 18
-[19-Feb-2013 18:31:18 UTC] PHP Fatal error:  Class 'Acme\HelloController' not found in /Users/atijust/Develop/card/index.php on line 18
-[19-Feb-2013 18:31:19 UTC] PHP Fatal error:  Class 'Acme\HelloController' not found in /Users/atijust/Develop/card/index.php on line 18
-[19-Feb-2013 18:31:19 UTC] PHP Fatal error:  Class 'Acme\HelloController' not found in /Users/atijust/Develop/card/index.php on line 18
-[19-Feb-2013 18:32:05 UTC] PHP Notice:  Undefined variable: name in /Users/atijust/Develop/card/src/Acme/HelloController.php on line 17
