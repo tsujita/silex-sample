@@ -13,7 +13,7 @@ class HelloController
 
     public function indexAction($name)
     {
-        return $this->app['twig']->render('hello.twig', array(
+        return $this->app['twig']->render('hello/index.twig', array(
             'name' => $name,
         ));
     }
