@@ -14,6 +14,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../logs/development.log',
 ));
+$app->register($profiler = new Silex\Provider\WebProfilerServiceProvider(), array(
+    'profiler.cache_dir' => __DIR__.'/../cache/profiler',
+));
+$app->mount('/_profiler', $profiler);
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('homepage.twig');
