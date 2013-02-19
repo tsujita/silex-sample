@@ -2,8 +2,6 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use Acme\HelloController;
-
 $app = new Silex\Application(); 
 
 $app['debug'] = true;
@@ -23,10 +21,14 @@ $app->get('/', function () use ($app) {
 ->bind('homepage');
 
 $app['hello.controller'] = $app->share(function () use ($app) {
-    return new HelloController($app);
+    return new Acme\HelloController($app);
 });
-
 $app->get('/hello/{name}', 'hello.controller:indexAction')->bind('hello');;
+
+$app['test.controller'] = $app->share(function () use ($app) {
+    return new Acme\TestController($app);
+});
+$app->get('/test/', 'test.controller:indexAction')->bind('test');;
 
 $app['monolog']->addDebug('Testing the Monolog logging.');
 
