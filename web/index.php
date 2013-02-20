@@ -88,7 +88,14 @@ $app->get('/dbal/truncate', function () use ($app) {
 // Monologテスト
 //
 
-$app['monolog']->addDebug('Testing the Monolog logging.');
+$app['monolog']->debug('Testing the Monolog logging.');
+$app['monolog']->info('Testing the Monolog logging.');
+$app['monolog']->notice('Testing the Monolog logging.');
+$app['monolog']->warn('Testing the Monolog logging.');
+$app['monolog']->err('Testing the Monolog logging.');
+$app['monolog']->crit('Testing the Monolog logging.');
+$app['monolog']->alert('Testing the Monolog logging.');
+$app['monolog']->emerg('Testing the Monolog logging.');
 
 $app->run(); 
 
