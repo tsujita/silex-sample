@@ -16,5 +16,6 @@ vendor/bin/phpunit
 * Silex Web Profiler
 * Twig
 * Monolog
+* Doctrine DBAL
 * PHPUnit
 
