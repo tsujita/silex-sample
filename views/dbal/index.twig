@@ -1,0 +1,8 @@
+{% extends "layout.twig" %}
+{% block title %}DBAL{% endblock %}
+{% block content %}
+  <h1>DBALテスト</h1>
+  <a href="{{ path('dbal_select') }}">SELECT</a><br />
+  <a href="{{ path('dbal_delete') }}">DELETE</a><br />
+  <a href="{{ path('dbal_truncate') }}">TRUNCATE</a><br />
+{% endblock %}

@@ -2,7 +2,7 @@
 
 namespace Acme;
 
-class HelloController
+class SampleController
 {
     protected $app;
 
@@ -13,7 +13,7 @@ class HelloController
 
     public function indexAction($name)
     {
-        return $this->app['twig']->render('hello/index.twig', array(
+        return $this->app['twig']->render('hello.twig', array(
             'name' => $name,
         ));
     }

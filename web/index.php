@@ -2,37 +2,91 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$app = new Silex\Application(); 
+class MyApplication extends Silex\Application {
+    use Silex\Application\UrlGeneratorTrait;
+    use Silex\Application\TwigTrait;
+    use Silex\Application\MonologTrait;
+}
+
+$app = new MyApplication(); 
 
 $app['debug'] = true;
 
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
+
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
+
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => array(
+        'driver' => 'pdo_sqlite',
+        'path'   => __DIR__.'/../db.sqlite',
+    ),
+));
+
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../logs/development.log',
 ));
+
 $app->register($profiler = new Silex\Provider\WebProfilerServiceProvider(), array(
     'profiler.cache_dir' => __DIR__.'/../cache/profiler',
 ));
 $app->mount('/_profiler', $profiler);
 
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('homepage.twig');
+//
+// ServiceControllerテスト
+//
+
+$app['sample.controller'] = $app->share(function () use ($app) {
+    return new Acme\SampleController($app);
+});
+$app->get('/hello/{name}', 'sample.controller:indexAction')->bind('hello');
+
+//
+// Doctrineテスト
+//
+
+$app->get('/dbal/', function () use ($app) {
+    return $app->render('/dbal/index.twig');
 })
-->bind('homepage');
+->bind('dbal_index');
 
-$app['hello.controller'] = $app->share(function () use ($app) {
-    return new Acme\HelloController($app);
-});
-$app->get('/hello/{name}', 'hello.controller:indexAction')->bind('hello');;
+$app->get('/dbal/select', function () use ($app) {
+    $stmt = $app['db']->prepare("SELECT * FROM `user`");
+    $stmt->execute();
+    return $app->render('/dbal/select.twig', array(
+        'users' => $stmt->fetchAll(),
+    ));
+})
+->bind('dbal_select');
 
-$app['test.controller'] = $app->share(function () use ($app) {
-    return new Acme\TestController($app);
-});
-$app->get('/test/', 'test.controller:indexAction')->bind('test');;
+$app->get('/dbal/insert/{name}', function ($name) use ($app) {
+    $stmt = $app['db']->prepare("INSERT INTO `user` (`name`) VALUES (?)");
+    $stmt->execute(array($name));
+    return $app->redirect($app->path('dbal_select'));
+})
+->bind('dbal_insert');
+
+$app->get('/dbal/delete', function () use ($app) {
+    $stmt = $app['db']->prepare("DELETE FROM `user`");
+    $stmt->execute();
+    return $app->redirect($app->path('dbal_select'));
+})
+->bind('dbal_delete');
+
+$app->get('/dbal/truncate', function () use ($app) {
+    $stmt = $app['db']->prepare("TRUNCATE TABLE `user`");
+    $stmt->execute();
+    return $app->redirect($app->path('dbal_select'));
+})
+->bind('dbal_truncate');
+
+//
+// Monologテスト
+//
 
 $app['monolog']->addDebug('Testing the Monolog logging.');
 
