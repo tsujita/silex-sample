@@ -1,13 +1,14 @@
 {
     "minimum-stability": "dev",
     "require": {
-        "silex/silex"         : "dev-master",
-        "silex/web-profiler"  : "~1.0@dev",
-        "twig/twig"           : ">=1.8,<2.0-dev",
-        "symfony/twig-bridge" : "~2.1",
-        "monolog/monolog"     : ">=1.0.0",
-        "doctrine/dbal"       : "2.2.*",
-        "phpunit/phpunit"     : "3.7.*@dev"
+        "silex/silex"                           : "dev-master",
+        "silex/web-profiler"                    : "~1.0@dev",
+        "twig/twig"                             : ">=1.8,<2.0-dev",
+        "symfony/twig-bridge"                   : "~2.1",
+        "monolog/monolog"                       : ">=1.0.0",
+        "phpunit/phpunit"                       : "3.7.*@dev",
+        "dflydev/doctrine-orm-service-provider" : "1.0.*@dev",
+        "dflydev/psr0-resource-locator-service-provider" : "1.0.*@dev"
     },
     "autoload": {
         "psr-0": {"Acme": "src/"}

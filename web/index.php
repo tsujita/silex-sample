@@ -27,6 +27,25 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
+use Dflydev\Silex\Provider\Psr0ResourceLocator\Psr0ResourceLocatorServiceProvider;
+use Dflydev\Silex\Provider\Psr0ResourceLocator\Composer\ComposerResourceLocatorServiceProvider;
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+
+$app->register(new Psr0ResourceLocatorServiceProvider);
+$app->register(new ComposerResourceLocatorServiceProvider);
+$app->register(new DoctrineOrmServiceProvider, array(
+    "orm.proxies_dir" => __DIR__."/../proxies",
+    "orm.em.options" => array(
+        "mappings" => array(
+            array(
+                "type"                => "annotation",
+                "namespace"           => "Acme\Entities",
+                "resources_namespace" => "Acme\Entities",
+            ),
+        ),
+    ),
+));
+
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../logs/development.log',
 ));
@@ -83,6 +102,26 @@ $app->get('/dbal/truncate', function () use ($app) {
     return $app->redirect($app->path('dbal_select'));
 })
 ->bind('dbal_truncate');
+
+//
+// ORMテスト
+//
+
+$app->get('/orm/insert/{name}', function ($name) use ($app) {
+    $user = new Acme\Entities\User();
+    $user->setName($name);
+    $app['orm.em']->persist($user);
+    $app['orm.em']->flush();
+    return $app->redirect($app->path('orm_select', array('id' => $user->getId())));
+})
+->bind('orm_insert');
+
+$app->get('/orm/select/{id}', function ($id) use ($app) {
+    return $app->render('/orm/select.twig', array(
+        'user' => $app['orm.em']->find('Acme\Entities\User', $id),
+    ));
+})
+->bind('orm_select');
 
 //
 // Monologテスト
